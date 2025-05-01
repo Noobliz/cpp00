@@ -16,7 +16,7 @@ void PhoneBook::addContact(const Contact &newContact)
 		nbContacts++;
 }
 
-Contact PhoneBook::getContact(std::string sindex)const
+Contact PhoneBook::getContact(const std::string &sindex)const
 {
 	int index;
 
