@@ -18,4 +18,6 @@ class Contact
 	void	setInfos(std::string infos[5]);
 	void	getInfos(std::string contact[5])const;
 };
+
+Contact	createContact();
 #endif
