@@ -15,7 +15,7 @@ class	PhoneBook
 	PhoneBook();
 
 	void	addContact(const Contact &newContact);
-	Contact	getContact(std::string index)const;
+	Contact	getContact(const std::string &index)const;
 	int	getNbContacts()const;
 	~PhoneBook();
 };
