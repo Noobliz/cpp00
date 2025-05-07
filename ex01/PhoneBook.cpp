@@ -1,6 +1,12 @@
 
 #include "PhoneBook.hpp"
 
+bool	isnum(char c)
+{
+	if (c < '0' && c > '9')
+		return false;
+	return true;
+}
 PhoneBook::PhoneBook() : nbContacts(0), indexToPlace(0) {
 	std::cout<<"hello"<<std::endl;
 }
@@ -15,12 +21,11 @@ void PhoneBook::addContact(const Contact &newContact)
 	if (nbContacts < 8)
 		nbContacts++;
 }
-
 Contact PhoneBook::getContact(const std::string &sindex)const
 {
 	int index;
 
-	if (sindex.length() > 1 || !isalnum(sindex[0]))
+	if (sindex.length() > 1 || !isnum(sindex[0]))
 	{
 		std::cerr<<"index should be >= 0 and < amount of contacts"<<std::endl;
 		return Contact();
@@ -43,13 +48,20 @@ PhoneBook::~PhoneBook()
 {
 	std::cout<<"ciao"<<std::endl;
 }
+void contactList()
+{
+	std::cout<<"index | ";
+	std::cout<<"first name | ";
+	std::cout<<"last name | ";
+	std::cout<<"nickname |"<<std::endl;
 
+}
 
 int	main()
 {
 	PhoneBook book;
 	std::string cmd;
-	std::string	sindex;
+	std::string	sindex = "abc";
 	Contact	newContact;
 	std::string contactDisplay[5];
 	std::cout<<"Welcome to your phonebook"<<std::endl;
@@ -69,11 +81,17 @@ int	main()
 		}
 		if (cmd == "SEARCH")
 		{
-			std::cout<<"enter your contact index (from 0 to 7): ";
-			if(!std::getline(std::cin, sindex))
+			contactList();
+			while (isnum(sindex[0]) == false)
 			{
-				std::cerr<<"Error reading stdin."<<std::endl;
-				return 1;
+				std::cout<<"enter your contact index (from 0 to 7): ";
+				if(!std::getline(std::cin, sindex))
+				{
+					std::cerr<<"Error reading stdin."<<std::endl;
+					return 1;
+				}
+				if (sindex[1] != '\0')
+					sindex = "retry";
 			}
 			newContact = book.getContact(sindex);
 			newContact.getInfos(contactDisplay);
