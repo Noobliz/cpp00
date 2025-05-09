@@ -1,22 +1,23 @@
 
 #ifndef PHONEBOOK_H
-# define PHONEBOOK_H
+#define PHONEBOOK_H
 
-# include "Contact.hpp"
+#include "Contact.hpp"
 
-class	PhoneBook
+class PhoneBook
 {
-	private:
+private:
 	Contact contacts[8];
-	int	nbContacts;
-	int	indexToPlace;
+	int 	nbContacts;
+	int 	indexToPlace;
 
-	public:
+public:
 	PhoneBook();
 
-	void	addContact(const Contact &newContact);
-	Contact	getContact(const std::string &index)const;
-	int	getNbContacts()const;
+	void 	addContact(const Contact &newContact);
+	Contact getContact(const std::string &index) const;
+	int 	getNbContacts() const;
+	void 	contactList() const;
 	~PhoneBook();
 };
 #endif
