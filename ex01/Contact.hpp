@@ -2,9 +2,9 @@
 #ifndef CONTACT_H
 #define CONTACT_H
 
-#include <string>
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 
 class Contact
 {

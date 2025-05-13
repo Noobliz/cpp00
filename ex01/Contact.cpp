@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Contact.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lisux <lisux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:52:17 by lguiet            #+#    #+#             */
-/*   Updated: 2025/05/09 14:52:20 by lguiet           ###   ########.fr       */
+/*   Updated: 2025/05/13 12:40:30 by lisux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,41 +59,3 @@ Contact createContact()
 	c.setInfos(infos);
 	return (c);
 }
-
-// int	main()
-// {
-// 	Contact c;
-
-// 	std::string infos[5];
-// 	std::string input[5] = {"first name ", "last name ",
-// 		 "nickname ", "phone number ", "dark secret "};
-// 	for (int i = 0; i < 5; i++)
-// 	{
-// 		std::cout<<"enter your "<<input[i]<<": ";
-// 		if (!std::getline(std::cin, infos[i]))
-// 		{
-// 			std::cerr<<"Error reading stdin."<<std::endl;
-// 			return 1;
-// 		}
-// 		while (infos[i].empty())
-// 		{
-// 			std::cerr<<"Error, can't have empty field"<<std::endl;
-// 			std::cout<<"enter your "<<input[i]<<": ";
-// 			if (!std::getline(std::cin, infos[i]))
-// 			{
-// 				std::cerr<<"Error reading stdin."<<std::endl;
-// 				return 1;
-// 			}
-// 		}
-// 	}
-// 	c.setInfos(infos);
-// 	std::string contact[5];
-// 	c.getInfos(contact);
-// 	std::cout<<std::endl;
-// 	for(int i = 0; i < 5; i++)
-// 	{
-// 		std::cout<<"your "<<input[i]<<"is : "<<contact[i]<<std::endl;
-
-// 	}
-
-// }

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lisux <lisux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:52:07 by lguiet            #+#    #+#             */
-/*   Updated: 2025/05/09 15:03:44 by lguiet           ###   ########.fr       */
+/*   Updated: 2025/05/13 12:46:04 by lisux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
+#include <sstream>
 
 bool isnum(char c)
 {
@@ -20,7 +21,7 @@ bool isnum(char c)
 }
 PhoneBook::PhoneBook() : nbContacts(0), indexToPlace(0)
 {
-	std::cout << "hello" << std::endl;
+	std::cout << "Welcome to your phonebook" << std::endl;
 }
 
 void PhoneBook::addContact(const Contact &newContact)
@@ -35,12 +36,10 @@ void PhoneBook::addContact(const Contact &newContact)
 }
 Contact PhoneBook::getContact(const std::string &sindex) const
 {
-	int index;
-
-	index = sindex[0] - '0';
-	if (index < 0 || index >= nbContacts)
+	int index = sindex[0] - '0';
+	if (index < 0 || index > nbContacts)
 	{
-		std::cerr << "index should be >= 0 and < amount of contacts" << std::endl;
+		std::cerr << "index should between 0 and "<<nbContacts << std::endl;
 		return Contact();
 	}
 	return contacts[index];
@@ -53,40 +52,41 @@ int PhoneBook::getNbContacts() const
 
 PhoneBook::~PhoneBook()
 {
-	std::cout << "ciao" << std::endl;
+	std::cout << "it's been an honor to serve, bye !" << std::endl;
+}
+std::string	fFormat(const std::string str)
+{
+	if (str.length() > 10)
+		return str.substr(0, 9) + ".";
+	std::stringstream ss;
+	ss << std::setw(10) << str;
+	return ss.str();
 }
 void PhoneBook::contactList() const
 {
-	std::cout << std::setw(10) << "index | ";
-	std::cout << std::setw(10) << "first name | ";
-	std::cout << std::setw(10) << "last name | ";
-	std::cout << std::setw(10) << "nickname |" << std::endl;
+	std::cout << "|-------------------------------------------|" << std::endl;
+	std::cout << "|     Index|First Name| Last Name|  Nickname|" << std::endl;
+	std::cout << "|----------|----------|----------|----------|" << std::endl;
 	for (int i = 0; i < nbContacts; i++)
 	{
-		// setw(N) <<< qui vient de iomanip, ca sert a forcer une taille de N
-		//  substr pour ce qui est sup a 10
-		std::cout << std::setw(10) << i;
-		std::string autrement[5];
-		contacts[i].getInfos(autrement);
-
-		std::cout << std::setw(10) << autrement[0];
-		std::cout << std::setw(10) << autrement[1];
-		std::cout << std::setw(10) << autrement[2] << std::endl;
+		std::string contact[5];
+		contacts[i].getInfos(contact);
+		std::cout <<"|" << std::setw(10) << i << "|"
+		          << fFormat(contact[0]) << "|"
+		          << fFormat(contact[1]) << "|"
+		          << fFormat(contact[2]) << "|" << std::endl;
 	}
+	std::cout << "|-------------------------------------------|" << std::endl;
 }
 
 int main()
 {
 	PhoneBook book;
 	std::string cmd;
-	std::string sIndex;
-	Contact newContact;
-	std::string contactDisplay[5];
-	std::cout << "Welcome to your phonebook" << std::endl;
 	while (cmd != "EXIT")
 	{
-		std::cout << "enter ADD, SEARCH or EXIT" << std::endl;
-		std::cout << ">> ";
+		std::cout	<< "enter ADD, SEARCH or EXIT" << std::endl
+					<< ">> ";
 		if (!std::getline(std::cin, cmd))
 		{
 			std::cerr << "Error reading stdin." << std::endl;
@@ -94,30 +94,39 @@ int main()
 		}
 		if (cmd == "ADD")
 		{
+			Contact newContact;
 			newContact = createContact();
 			book.addContact(newContact);
 		}
 		if (cmd == "SEARCH")
 		{
+			if (book.getNbContacts() == 0)
+			{
+				std::cout<<"Please, Add a contact first"<<std::endl;
+				continue;
+			}
 			book.contactList();
+			std::string sIndex;
 			while (true)
 			{
 				std::cout << "Enter your contact index (0 to " << book.getNbContacts() - 1 << "): ";
 				if (!std::getline(std::cin, sIndex))
 				{
 					std::cout << std::endl;
-					std::cerr << "getline error" << std::endl;
+					std::cerr << "Error reading stdin." << std::endl;
 					return 1;
 				}
-				if (sIndex.length() != 1 || !isnum(sIndex[0]))
+				if (sIndex.length() != 1 || !isnum(sIndex[0]) || (sIndex[0] - '0' > book.getNbContacts() - 1))
 				{
 					std::cerr << "Invalid input. Try again." << std::endl;
 					continue;
 				}
 				break;
 			}
-			newContact = book.getContact(sIndex);
-			newContact.getInfos(contactDisplay);
+			Contact contactN;
+			contactN = book.getContact(sIndex);
+			std::string contactDisplay[5];
+			contactN.getInfos(contactDisplay);
 			for (int i = 0; i < 5; i++)
 			{
 				std::cout << contactDisplay[i] << std::endl;
