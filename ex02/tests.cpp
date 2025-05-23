@@ -15,13 +15,13 @@
 
 int		main( void ) {
 
-	typedef std::vector<Account::t>							  accounts_t; // cree un alias de type vector
-	typedef std::vector<int>								  ints_t; // tableau dyna d'amounts 
+	typedef std::vector<Account::t>							  accounts_t; // create alias of type vector
+	typedef std::vector<int>								  ints_t; // dyna tab of amounts
 	typedef std::pair<accounts_t::iterator, ints_t::iterator> acc_int_t;
 
 	int	const				amounts[]	= { 42, 54, 957, 432, 1234, 0, 754, 16576 };
 	size_t const			amounts_size( sizeof(amounts) / sizeof(int) );
-	accounts_t				accounts(amounts, amounts + amounts_size ); // cree et rempli le tab dyna a partir d'amount
+	accounts_t				accounts(amounts, amounts + amounts_size ); // create and fill tab from amounts
 	accounts_t::iterator	acc_begin	= accounts.begin();
 	accounts_t::iterator	acc_end		= accounts.end();
 
@@ -37,16 +37,16 @@ int		main( void ) {
 	ints_t::iterator	wit_begin	= withdrawals.begin();
 	ints_t::iterator	wit_end		= withdrawals.end();
 	
-	Account::displayAccountsInfos(); // infos sur tous les comptes (pk ca apparait apres dans le log ??)
+	Account::displayAccountsInfos();
 
-	std::for_each( acc_begin, acc_end, std::mem_fun_ref( &Account::displayStatus ) ); // appelle la fonction displaystatus pour chaque account
+	std::for_each( acc_begin, acc_end, std::mem_fun_ref( &Account::displayStatus ) ); // call displaystatus for each account
 
 	for ( acc_int_t it( acc_begin, dep_begin );
-		  it.first != acc_end && it.second != dep_end; //parcours 2 tableaux en parallele jusqu'a leur fin
+		  it.first != acc_end && it.second != dep_end; //go through both tabs until their ends
 		  ++(it.first), ++(it.second) ) {
 
-		(*(it.first)).makeDeposit( *(it.second) ); //it.first = account[x], it.second l'int a deposer
-	} // '*' pour passer la valeur pointee par l'iterateur
+		(*(it.first)).makeDeposit( *(it.second) ); //it.first = account[x], it.second the int to put
+	} // '*' to pass the value pointed by the iterator
 
 	Account::displayAccountsInfos();
 	std::for_each( acc_begin, acc_end, std::mem_fun_ref( &Account::displayStatus ) );

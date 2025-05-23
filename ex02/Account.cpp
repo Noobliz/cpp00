@@ -1,7 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Account.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lisux <lisux@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/09 14:52:17 by lguiet            #+#    #+#             */
+/*   Updated: 2025/05/23 14:50:28 by lisux            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 
 #include "Account.hpp"
-// std::strftime
 
 int Account::_nbAccounts = 0;
 int Account::_totalAmount = 0;
@@ -59,6 +69,10 @@ void Account::displayStatus() const
 
 void Account::makeDeposit(int deposit)
 {
+	if (deposit <= 0){
+		std::cerr<<"index:"<<_accountIndex<<" deposit should be superior to 0"<<std::endl;
+		return ;
+	}
 	int p_amount = _amount;
 	_amount += deposit;
 	_totalAmount += deposit;
@@ -74,6 +88,10 @@ void Account::makeDeposit(int deposit)
 }
 bool Account::makeWithdrawal(int withdrawal)
 {
+	if (withdrawal <= 0){
+		std::cerr<<"index:"<<_accountIndex<<" withdrawal should be superior to 0"<<std::endl;
+		return false;
+	}
 	if (withdrawal > _amount)
 	{
 		_displayTimestamp();
@@ -83,20 +101,17 @@ bool Account::makeWithdrawal(int withdrawal)
 				<< std::endl;
 		return false;
 	}
-	else
-	{
-		int p_amount = _amount;
-		_amount -= withdrawal;
-		_totalAmount -= withdrawal;
-		_nbWithdrawals++;
-		_totalNbWithdrawals++;
-		_displayTimestamp();
-		std::cout << "index:" << _accountIndex
-				<< ";p_amount:" << p_amount
-				<< ";withdrawal:" << withdrawal
-				<< ";amount:" << _amount
-				<< ";nb_withdrawals:" << _nbWithdrawals
-				<< std::endl;
-		return true;
-	}
+	int p_amount = _amount;
+	_amount -= withdrawal;
+	_totalAmount -= withdrawal;
+	_nbWithdrawals++;
+	_totalNbWithdrawals++;
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex
+			<< ";p_amount:" << p_amount
+			<< ";withdrawal:" << withdrawal
+			<< ";amount:" << _amount
+			<< ";nb_withdrawals:" << _nbWithdrawals
+			<< std::endl;
+	return true;
 }

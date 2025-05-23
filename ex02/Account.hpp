@@ -26,7 +26,7 @@ class Account {
 public:
 
 	typedef Account		t;
-//global pour tous les objets (lie a la classe)
+//global for all the objects of a class
 	static int	getNbAccounts( void );
 	static int	getTotalAmount( void );
 	static int	getNbDeposits( void );
@@ -35,7 +35,7 @@ public:
 
 	Account( int initial_deposit );
 	~Account( void );
-// pas static car lie a un objet specifique
+// not static because specific to one obj
 	void	makeDeposit( int deposit );
 	bool	makeWithdrawal( int withdrawal );
 	int		checkAmount( void ) const;
@@ -43,7 +43,6 @@ public:
 
 
 private:
-// static = partage entre tous les objets (global un peu)
 	static int	_nbAccounts;
 	static int	_totalAmount;
 	static int	_totalNbDeposits;
